@@ -72,8 +72,7 @@ public class IniciarAplicacaoServiceImpl {
 			});
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("Falha ao inserir os registros no banco de dados", IniciarAplicacaoServiceImpl.class);
 		}
 
 		logger.info("Filmes salvos no repositório");

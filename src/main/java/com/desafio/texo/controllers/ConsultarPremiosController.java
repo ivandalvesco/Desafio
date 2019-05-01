@@ -18,27 +18,25 @@ import com.desafio.texo.service.impl.FilmeServiceImpl;
 @RequestMapping(path = "/piores-filmes")
 public class ConsultarPremiosController {
 
-	
 	@Autowired
 	FilmeServiceImpl filmeService;
+
 	@GetMapping(value = "/premiacoes")
-	public ResponseEntity<Response<IntervaloPremioDto>> listarIntervalosDePremiacao(){
+	public ResponseEntity<Response<IntervaloPremioDto>> listarIntervalosDePremiacao() {
 		List<PremioDto> premios = new ArrayList<PremioDto>();
 		premios = filmeService.getPremios();
-		
+
 		IntervaloPremioDto intervalo = new IntervaloPremioDto();
 		intervalo = filmeService.getIntervaloPremioDto(premios);
-		
+
 		Response<IntervaloPremioDto> response = new Response<IntervaloPremioDto>();
 		response.setData(intervalo);
-		if(premios.isEmpty()) {
+		if (premios.isEmpty()) {
 			ResponseEntity.badRequest().body(response);
 		}
-		
+
 		return ResponseEntity.ok(response);
-		
+
 	}
-	
-	
 
 }
