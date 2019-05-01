@@ -3,7 +3,7 @@ package com.desafio.texo;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.desafio.texo.facade.IniciarAplicacaoFacade;
+import com.desafio.texo.config.ConfigRepository;
 
 @SpringBootApplication
 public class DesafioApplication {
@@ -11,7 +11,9 @@ public class DesafioApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(DesafioApplication.class, args);
 		
- 		new IniciarAplicacaoFacade().iniciarAplicacao();
+		ConfigRepository config = new ConfigRepository();
+		config.iniciarAplicacaio();
+		
 	}
 
 }
