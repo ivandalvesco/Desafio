@@ -5,9 +5,13 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -21,14 +25,18 @@ import javax.persistence.Table;
 public class Produtor {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@Column(name = "nome", nullable = false)
 	private String nome;
 	
-	@OneToMany(mappedBy = "produtor", cascade = CascadeType.PERSIST)
-	private List<FilmeProdutor> filmes;
+//	@OneToMany(mappedBy = "produtor", cascade = CascadeType.PERSIST)
+//	private List<FilmeProdutor> filmes;
+	
+	@ManyToMany(targetEntity = Filme.class, fetch = FetchType.LAZY)
+	@JoinTable(name = "tb_filme_produtor", joinColumns = {@JoinColumn(name = "id_filme")}, inverseJoinColumns = {@JoinColumn(name ="id_produtor")})
+	List<Filme> filmes;
 
 	public Produtor() {
 	}
@@ -49,14 +57,18 @@ public class Produtor {
 		this.nome = nome;
 	}
 
-	public List<FilmeProdutor> getFilmes() {
+	public List<Filme> getFilmes() {
 		return filmes;
 	}
 
-	public void setFilmes(List<FilmeProdutor> filmes) {
+	public void setFilmes(List<Filme> filmes) {
 		this.filmes = filmes;
 	}
+
 	
-	
+	@Override
+	public String toString() {
+		return this.nome;
+	}
 
 }

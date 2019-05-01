@@ -16,9 +16,6 @@ public class ProdutorServiceImpl implements ProdutorService{
 	@Override
 	public Produtor persistir(Produtor produtor) {
 		this.produtorRepository.save(produtor);
-		return null;
+		return produtor;
 	}
-	
-	
-	
 }

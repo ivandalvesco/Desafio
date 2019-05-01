@@ -5,11 +5,7 @@ import java.util.List;
 
 import com.desafio.texo.model.Estudio;
 import com.desafio.texo.model.Filme;
-import com.desafio.texo.model.FilmeEstudio;
-import com.desafio.texo.model.FilmeProdutor;
 import com.desafio.texo.model.Produtor;
-import com.desafio.texo.service.FilmeService;
-import com.desafio.texo.service.impl.ProdutorServiceImpl;
 
 public class Builder {
 
@@ -32,16 +28,25 @@ public class Builder {
 		return dadosFormatados;
 	}
 	
-	public Produtor buildProdutor(String nome) {
-		Produtor produtor = new Produtor();
-		produtor.setNome(nome);
-		return produtor;
+	public List<Produtor> buildProdutores(List<String> nomes) {
+		List<Produtor> produtores = new ArrayList<Produtor>();
+		for (String nome : nomes) {
+			Produtor produtor = new Produtor();
+			produtor.setNome(nome);
+			produtores.add(produtor);
+		}
+		return produtores;
 	}
 	
-	public Estudio buildEstudio (String nome) {
-		Estudio estudio = new Estudio();
-		estudio.setNome(nome);
-		return estudio;
+	public List<Estudio> buildEstudios (List<String> nomes) {
+		List<Estudio> estudios = new ArrayList<Estudio>();
+	
+		for (String nome : nomes) {
+			Estudio estudio = new Estudio();
+			estudio.setNome(nome);
+			estudios.add(estudio);
+		}
+		return estudios;
 	}
 	
 	public Filme buildFilme(String[] dadosFilme) {
@@ -53,18 +58,18 @@ public class Builder {
 		return filme;
 	}
 	
-	public FilmeEstudio buildFilmeEstudio(Filme filme, Estudio estudio) {
-		FilmeEstudio filmeEstudio = new FilmeEstudio();
-		filmeEstudio.setEstudio(estudio);
-		filmeEstudio.setFilme(filme);
-		return filmeEstudio;
-	}
-	
-	public FilmeProdutor buildFilmeProdutor(Filme filme, Produtor produtor) {
-		FilmeProdutor filmeProdutor = new FilmeProdutor();
-		filmeProdutor.setFilme(filme);
-		filmeProdutor.setProdutor(produtor);
-		
-		return filmeProdutor;
-	}
+//	public FilmeEstudio buildFilmeEstudio(Filme filme, Estudio estudio) {
+//		FilmeEstudio filmeEstudio = new FilmeEstudio();
+//		filmeEstudio.setEstudio(estudio);
+//		filmeEstudio.setFilme(filme);
+//		return filmeEstudio;
+//	}
+//	
+//	public FilmeProdutor buildFilmeProdutor(Filme filme, Produtor produtor) {
+//		FilmeProdutor filmeProdutor = new FilmeProdutor();
+//		filmeProdutor.setFilme(filme);
+//		filmeProdutor.setProdutor(produtor);
+//		
+//		return filmeProdutor;
+//	}
 }
