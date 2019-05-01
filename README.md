@@ -22,3 +22,8 @@ Desenvolva uma API RESTful para possibilitar a leitura da lista de indicados e v
 O arquivo .csv encontra-se no path /src/main/resources/files/movielist.csv;
 A listagem dos produtores com maior e menor intervalo entre os prêmios é realizada por meio do método;
 GET http://localhost:8080/piores-filmes/premiacoes
+
+# Testes
+
+1. O teste para verificar a execução do método que irá listar os produtores com maior e menor intervalo entre as premiações irá ocorrer com sucesso quando o retorno da chamada do método para listar os produtores retornar um status Http Ok (200);
+2. O teste para verificar a leitura e inserção dos registros vindos do arquivo .csv irá retornar com sucesso quando o número de registros retornado pela classe FilmeRepository, utilizando o método count() for maior que zero;
