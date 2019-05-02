@@ -1,6 +1,5 @@
 package com.desafio.texo.response;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Response <T> {
@@ -17,14 +16,5 @@ public class Response <T> {
 	public void setData(T data) {
 		this.data = data;
 	}
-	public List<String> getErros() {
-		
-		return erros == null ? new ArrayList<String>() : erros ;
-	}
-	public void setErros(List<String> erros) {
-		this.erros = erros;
-	}
-	
-	
 	
 }

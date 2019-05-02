@@ -1,30 +1,33 @@
 package com.desafio.texo.dtos;
 
+import java.util.List;
+
 public class IntervaloPremioDto {
 
 	
-	private PremioDto min;
+	private List<PremioDto> min;
 	
-	private PremioDto max;
+	private List<PremioDto> max;
 
 	public IntervaloPremioDto() {
 	}
-	
-	public PremioDto getMin() {
+
+	public List<PremioDto> getMin() {
 		return min;
 	}
 
-	public void setMin(PremioDto min) {
+	public void setMin(List<PremioDto> min) {
 		this.min = min;
 	}
 
-	public PremioDto getMax() {
+	public List<PremioDto> getMax() {
 		return max;
 	}
 
-	public void setMax(PremioDto max) {
+	public void setMax(List<PremioDto> max) {
 		this.max = max;
 	}
+
 	
 	
 	

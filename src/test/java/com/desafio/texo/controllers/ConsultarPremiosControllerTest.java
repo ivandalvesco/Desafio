@@ -22,7 +22,8 @@ public class ConsultarPremiosControllerTest {
 	
 	@Test
 	public void testListarIntervalosDePremiacao() {
-		ResponseEntity<Response<IntervaloPremioDto>> response = consultarPremiosController.listarIntervalosDePremiacao();
+		//ResponseEntity<Response<IntervaloPremioDto>> response = consultarPremiosController.listarIntervalosDePremiacao();
+		ResponseEntity<IntervaloPremioDto> response = consultarPremiosController.listarIntervalosDePremiacao();
 		Assert.assertThat(HttpStatus.OK, Matchers.is(response.getStatusCode()));
 	}
 }
