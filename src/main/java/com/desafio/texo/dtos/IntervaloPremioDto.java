@@ -4,9 +4,8 @@ import java.util.List;
 
 public class IntervaloPremioDto {
 
-	
 	private List<PremioDto> min;
-	
+
 	private List<PremioDto> max;
 
 	public IntervaloPremioDto() {
@@ -28,7 +27,4 @@ public class IntervaloPremioDto {
 		this.max = max;
 	}
 
-	
-	
-	
 }

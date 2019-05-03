@@ -9,7 +9,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +31,7 @@ public class IniciarAplicacaoServiceImpl {
 	@Autowired
 	FilmeRepository filmeRepository;
 
-	public void iniciarAplicacao() {
+	public boolean iniciarAplicacao() {
 		logger.info("Iniciando aplicação");
 		logger.info("Iniciando a leitura do arquivo .csv");
 
@@ -70,12 +69,14 @@ public class IniciarAplicacaoServiceImpl {
 				filme.setProdutores(produtorSet);
 				filmeRepository.save(filme);
 			});
-
 		} catch (IOException e) {
+			
 			logger.error("Falha ao inserir os registros no banco de dados", IniciarAplicacaoServiceImpl.class);
+			return false;
 		}
 
 		logger.info("Filmes salvos no repositório");
+		return true;
 
 	}
 }

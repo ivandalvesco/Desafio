@@ -1,10 +1,8 @@
 package com.desafio.texo.service.impl;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,24 +39,16 @@ public class FilmeServiceImpl implements FilmeService {
 	public IntervaloPremioDto getIntervaloPremioDto(List<PremioDto> premios) {
 		IntervaloPremioDto intervalo = new IntervaloPremioDto();
 
-		intervalo.setMin(
-				premios
-				.stream()
-				.filter(premio -> 
-					premio.getInterval().equals(
-							premios.stream().min(Comparator.comparing(PremioDto::getInterval)).get().getInterval()
-							)
-					).collect(Collectors.toList()));
-		
-		intervalo.setMax(
-				premios
-				.stream()
-				.filter(premio -> 
-					premio.getInterval().equals(
-							premios.stream().max(Comparator.comparing(PremioDto::getInterval)).get().getInterval()
-							)
-					).collect(Collectors.toList()));
-		
+		intervalo.setMin(premios.stream()
+				.filter(premio -> premio.getInterval()
+						.equals(premios.stream().min(Comparator.comparing(PremioDto::getInterval)).get().getInterval()))
+				.collect(Collectors.toList()));
+
+		intervalo.setMax(premios.stream()
+				.filter(premio -> premio.getInterval()
+						.equals(premios.stream().max(Comparator.comparing(PremioDto::getInterval)).get().getInterval()))
+				.collect(Collectors.toList()));
+
 		return intervalo;
 	}
 }

@@ -1,6 +1,7 @@
 package com.desafio.texo.service.impl;
 
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,6 +23,9 @@ public class IniciarAplicacaoServiceImplTest {
 	
 	@Test
 	public void testIniciarAplicacao() {
+		iniciarAplicacaoServiceImpl = mock(IniciarAplicacaoServiceImpl.class);
+		filmeRepository = mock(FilmeRepository.class);
+		
 		this.iniciarAplicacaoServiceImpl.iniciarAplicacao();
 		
 		assertTrue(filmeRepository.count() > 1); 	

@@ -28,9 +28,6 @@ public class ConsultarPremiosController {
 		IntervaloPremioDto intervalo = new IntervaloPremioDto();
 		intervalo = filmeService.getIntervaloPremioDto(premios);
 
-		
-//		Response<IntervaloPremioDto> response = new Response<IntervaloPremioDto>();
-//		response.setData(intervalo);
 		if (premios.isEmpty()) {
 			return ResponseEntity.badRequest().body(null);
 		}

@@ -1,5 +1,6 @@
 package com.desafio.texo.controllers;
 
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -19,12 +20,19 @@ public class ConsultarPremiosControllerTest {
 
 	@Autowired
 	private ConsultarPremiosController consultarPremiosController;
-	
+
 	@Test
 	public void testListarIntervalosDePremiacao() {
 		consultarPremiosController = mock(ConsultarPremiosController.class);
-		when(consultarPremiosController.listarIntervalosDePremiacao()).thenReturn(new ResponseEntity<IntervaloPremioDto>(HttpStatus.OK));
-//		ResponseEntity<IntervaloPremioDto> response = consultarPremiosController.listarIntervalosDePremiacao();
-//		Assert.assertThat(HttpStatus.OK, Matchers.is(response.getStatusCode()));
+		when(consultarPremiosController.listarIntervalosDePremiacao())
+				.thenReturn(new ResponseEntity<IntervaloPremioDto>(HttpStatus.OK));
 	}
+	
+//	@Test
+//	public void testVerificarObjetosIntervalorPremiacao() {
+//		consultarPremiosController = new ConsultarPremiosController();
+//		IntervaloPremioDto intervaloPremioDto = consultarPremiosController.listarIntervalosDePremiacao().getBody();
+//		assertNotNull(intervaloPremioDto);
+//		
+//	}
 }
