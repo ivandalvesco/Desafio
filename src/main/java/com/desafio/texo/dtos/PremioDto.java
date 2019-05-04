@@ -42,4 +42,11 @@ public class PremioDto {
 		this.followingWin = followingWin;
 	}
 
+	public boolean equals(PremioDto premioCompare) {
+		if(!premioCompare.getProducer().equals(this.producer) || !premioCompare.getInterval().equals(this.interval)
+		|| !premioCompare.getFollowingWin().equals(this.followingWin) || !premioCompare.getPreviousWin().equals(this.previousWin)) {
+			return false;
+		}
+	return true;
+	}
 }

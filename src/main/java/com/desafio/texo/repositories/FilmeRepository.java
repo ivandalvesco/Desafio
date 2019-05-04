@@ -19,5 +19,4 @@ public interface FilmeRepository extends JpaRepository<Filme, Long> {
 			+ "from tb_filme f " + "join produtores p on f.id = p.filme_id " + "where f.is_ganhador = true "
 			+ "group by p.produtores " + "having count(f.id) > 1", nativeQuery = true)
 	List<Object> findProdutores();
-
 }
