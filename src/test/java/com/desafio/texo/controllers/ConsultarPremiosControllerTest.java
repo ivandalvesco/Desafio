@@ -1,7 +1,10 @@
 package com.desafio.texo.controllers;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -77,9 +80,6 @@ public class ConsultarPremiosControllerTest {
 	public void retornoResponseServicoPremiacoesTest() {
 		RestTemplate restTemplate = mock(RestTemplate.class);
 		consultarPremiosController = mock(ConsultarPremiosController.class);
-//		assertNotNull(consultarPremiosController.listarIntervalosDePremiacao().getBody());
-//		assertEquals(intervaloPremioDto, consultarPremiosController.listarIntervalosDePremiacao().getBody());
-//		
 		IntervaloPremioDto intervaloPremioDto = mock(IntervaloPremioDto.class);
 		ResponseEntity<IntervaloPremioDto> response = mock(ResponseEntity.class);
 		when(response.getBody()).thenReturn(intervaloPremioDto);
@@ -91,12 +91,14 @@ public class ConsultarPremiosControllerTest {
 		ResponseEntity<IntervaloPremioDto> response = consultarPremiosController.listarIntervalosDePremiacao();
 		
 		assertEquals(response.getStatusCode(), responseCompare.getStatusCode());
-		
+		assertNotNull(response.getBody());
+		assertNotNull(response.getBody().getMin());
+		assertNotNull(response.getBody().getMax());
 		assertEquals(response.getBody().getMin().size(), responseCompare.getBody().getMin().size());
 		assertEquals(response.getBody().getMax().size(), responseCompare.getBody().getMax().size());
-		assertThat(response.getBody().getMin(), CoreMatchers.hasItems(responseCompare.getBody().getMin()));
-		assertThat(response.getBody().getMax(), CoreMatchers.hasItems(responseCompare.getBody().getMax()));
-
+		assertEquals(response.getBody(), responseCompare.getBody());
+		
+		
 		
 	}
 

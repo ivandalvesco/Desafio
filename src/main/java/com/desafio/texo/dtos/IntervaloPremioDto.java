@@ -27,4 +27,19 @@ public class IntervaloPremioDto {
 		this.max = max;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+
+		IntervaloPremioDto intervaloCompare = (IntervaloPremioDto) obj;
+
+		if (intervaloCompare != null) {
+			if (this.max.equals(intervaloCompare.getMax()) && this.min.equals(intervaloCompare.getMin())) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
 }

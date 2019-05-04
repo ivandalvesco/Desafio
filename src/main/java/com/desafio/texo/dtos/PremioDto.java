@@ -42,11 +42,21 @@ public class PremioDto {
 		this.followingWin = followingWin;
 	}
 
-	public boolean equals(PremioDto premioCompare) {
-		if(!premioCompare.getProducer().equals(this.producer) || !premioCompare.getInterval().equals(this.interval)
-		|| !premioCompare.getFollowingWin().equals(this.followingWin) || !premioCompare.getPreviousWin().equals(this.previousWin)) {
+	@Override
+	public boolean equals(Object obj) {
+		PremioDto premioCompare = (PremioDto) obj;
+
+		if (premioCompare != null) {
+			if (!premioCompare.getProducer().equals(this.producer) 
+					|| !premioCompare.getInterval().equals(this.interval)
+					|| !premioCompare.getFollowingWin().equals(this.followingWin)
+					|| !premioCompare.getPreviousWin().equals(this.previousWin)) {
+				return false;
+			}
+			return true;
+		} else {
 			return false;
 		}
-	return true;
 	}
+
 }
