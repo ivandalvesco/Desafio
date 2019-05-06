@@ -1,106 +1,75 @@
 package com.desafio.texo.controllers;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.hamcrest.Matchers.hasSize;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.Matcher;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.BDDMockito;
+import org.mockito.InjectMocks;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.desafio.texo.dtos.IntervaloPremioDto;
 import com.desafio.texo.dtos.PremioDto;
+import com.desafio.texo.service.impl.FilmeServiceImpl;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@WebMvcTest(ConsultarPremiosController.class)
 public class ConsultarPremiosControllerTest {
 
 	@Autowired
-	private ConsultarPremiosController consultarPremiosController;
-
-	private ResponseEntity<IntervaloPremioDto> responseCompare;
-	private IntervaloPremioDto intervalo;
-	private List<PremioDto> min;
-	private List<PremioDto> max;
-	private PremioDto premioMin;
-	private PremioDto premioMax;
+	private MockMvc mockMvc;
+	
+	@MockBean
+	private FilmeServiceImpl service;
+	
+	@InjectMocks
+	ConsultarPremiosController controller;
 	
 	@Before
-	public void setUp() {
-		
-		intervalo = new IntervaloPremioDto();
-		min = new ArrayList<PremioDto>();
-		max = new ArrayList<PremioDto>();
-		premioMin = new PremioDto();
-		premioMax = new PremioDto();
-		
-		premioMin.setProducer("Joel Silver");
-		premioMin.setInterval(1L);
-		premioMin.setPreviousWin(1990L);
-		premioMin.setFollowingWin(1991L);
-		
-		premioMax.setProducer("Matthew Vaughn");
-		premioMax.setInterval(13L);
-		premioMax.setPreviousWin(2002L);
-		premioMax.setFollowingWin(2015L);
-		
-		min.add(premioMin);
-		max.add(premioMax);
-		intervalo.setMin(min);
-		intervalo.setMax(max);
-		
-		responseCompare = new ResponseEntity<IntervaloPremioDto>(intervalo, HttpStatus.OK);
-		
+	 public void setUp() {
+	      MockitoAnnotations.initMocks(this);
+	    this.mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
 	}
 	
 	@Test
-	public void testListarIntervalosDePremiacao() {
-		consultarPremiosController = mock(ConsultarPremiosController.class);
-		when(consultarPremiosController.listarIntervalosDePremiacao())
-				.thenReturn(new ResponseEntity<IntervaloPremioDto>(HttpStatus.OK));
-	}
-	
-	@Test
-	public void retornoResponseServicoPremiacoesTest() {
-		RestTemplate restTemplate = mock(RestTemplate.class);
-		consultarPremiosController = mock(ConsultarPremiosController.class);
-		IntervaloPremioDto intervaloPremioDto = mock(IntervaloPremioDto.class);
-		ResponseEntity<IntervaloPremioDto> response = mock(ResponseEntity.class);
-		when(response.getBody()).thenReturn(intervaloPremioDto);
-		when(restTemplate.exchange("http://localhost:8080/piores-filmes/premiacoes", HttpMethod.GET, null, IntervaloPremioDto.class)).thenReturn(response);	
-	}
-	
-	@Test
-	public void intervaloPremioDtoTest() {
-		ResponseEntity<IntervaloPremioDto> response = consultarPremiosController.listarIntervalosDePremiacao();
+	public void intervaloPremiosTest() throws Exception{
 		
-		assertEquals(response.getStatusCode(), responseCompare.getStatusCode());
-		assertNotNull(response.getBody());
-		assertNotNull(response.getBody().getMin());
-		assertNotNull(response.getBody().getMax());
-		assertEquals(response.getBody().getMin().size(), responseCompare.getBody().getMin().size());
-		assertEquals(response.getBody().getMax().size(), responseCompare.getBody().getMax().size());
-		assertEquals(response.getBody(), responseCompare.getBody());
+		PremioDto premioMin = new PremioDto("Joel Silver", 1L, 1990L, 1991L);
+		PremioDto premioMax = new PremioDto("Matthew Vaughn", 13L, 2002L, 2015L);
+		IntervaloPremioDto intervalo = new IntervaloPremioDto(Arrays.asList(premioMin), Arrays.asList(premioMax));
+		List<PremioDto> premios = Arrays.asList(premioMin, premioMax);
 		
+		BDDMockito.given(service.getPremios()).willReturn(premios);
+		BDDMockito.given(controller.listarIntervalosDePremiacao().getBody()).willReturn(intervalo);
 		
+		mockMvc.perform(get("/piores-filmes/premiacoes")
+				.contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
+		.andExpect(jsonPath("$.min", hasSize(1)))
+		.andExpect(jsonPath("$.min[0].producer", is(premioMin.getProducer())))
+		.andExpect(jsonPath("$.min[0].interval", is(premioMin.getInterval().intValue())))
+		.andExpect(jsonPath("$.min[0].previousWin", is(premioMin.getPreviousWin().intValue())))
+		.andExpect(jsonPath("$.min[0].followingWin", is(premioMin.getFollowingWin().intValue())))
+		.andExpect(jsonPath("$.max", hasSize(1)))
+		.andExpect(jsonPath("$.max[0].producer", is(premioMax.getProducer())))
+		.andExpect(jsonPath("$.max[0].interval", is(premioMax.getInterval().intValue())))
+		.andExpect(jsonPath("$.max[0].previousWin", is(premioMax.getPreviousWin().intValue())))
+		.andExpect(jsonPath("$.max[0].followingWin", is(premioMax.getFollowingWin().intValue())));
 		
 	}
-
 
 }

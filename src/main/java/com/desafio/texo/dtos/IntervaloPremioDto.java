@@ -11,6 +11,12 @@ public class IntervaloPremioDto {
 	public IntervaloPremioDto() {
 	}
 
+	public IntervaloPremioDto(List<PremioDto> min, List<PremioDto> max) {
+		super();
+		this.min = min;
+		this.max = max;
+	}
+
 	public List<PremioDto> getMin() {
 		return min;
 	}

@@ -9,6 +9,18 @@ public class PremioDto {
 
 	public PremioDto() {
 	}
+	
+	
+
+	public PremioDto(String producer, Long interval, Long previousWin, Long followingWin) {
+		super();
+		this.producer = producer;
+		this.interval = interval;
+		this.previousWin = previousWin;
+		this.followingWin = followingWin;
+	}
+
+
 
 	public String getProducer() {
 		return producer;

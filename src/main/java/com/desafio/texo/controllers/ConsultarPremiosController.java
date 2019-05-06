@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.desafio.texo.dtos.IntervaloPremioDto;
@@ -19,8 +20,9 @@ public class ConsultarPremiosController {
 
 	@Autowired
 	FilmeServiceImpl filmeService;
-
-	@GetMapping(value = "/premiacoes")
+	//TODO VERIFICAR IMPLEMENTAÇÃO PARA TRAZER A LISTA DE FILMES E TRATAR POR STREAM NO MÉTODO AO INVÉS DE REALIZAR O TRATAMENTO POR SQL
+	//@GetMapping(value = "/premiacoes")
+	@RequestMapping(value = "/premiacoes", method = RequestMethod.GET)
 	public ResponseEntity<IntervaloPremioDto> listarIntervalosDePremiacao() {
 		List<PremioDto> premios = new ArrayList<PremioDto>();
 		premios = filmeService.getPremios();
