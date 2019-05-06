@@ -55,9 +55,9 @@ public class ConsultarPremiosControllerTest {
 		List<PremioDto> premios = Arrays.asList(premioMin, premioMax);
 		
 		BDDMockito.given(service.getPremios()).willReturn(premios);
-		BDDMockito.given(controller.listarIntervalosDePremiacao2().getBody()).willReturn(intervalo);
+		BDDMockito.given(controller.listarIntervalosDePremiacao().getBody()).willReturn(intervalo);
 		
-		mockMvc.perform(get("/piores-filmes/premiacoes2")
+		mockMvc.perform(get("/piores-filmes/premiacoes")
 				.contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
 		.andExpect(jsonPath("$.min", hasSize(1)))
 		.andExpect(jsonPath("$.min[0].producer", is(premioMin.getProducer())))

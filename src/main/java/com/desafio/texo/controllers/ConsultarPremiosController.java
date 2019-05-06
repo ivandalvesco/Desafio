@@ -19,27 +19,11 @@ public class ConsultarPremiosController {
 
 	@Autowired
 	FilmeServiceImpl filmeService;
-
+	
 	@RequestMapping(value = "/premiacoes", method = RequestMethod.GET)
-	public ResponseEntity<IntervaloPremioDto> listarIntervalosDePremiacao() {
+	public ResponseEntity<IntervaloPremioDto> listarIntervalosDePremiacao(){
 		List<PremioDto> premios = new ArrayList<PremioDto>();
 		premios = filmeService.getPremios();
-
-		IntervaloPremioDto intervalo = new IntervaloPremioDto();
-		intervalo = filmeService.getIntervaloPremioDto(premios);
-
-		if (premios.isEmpty()) {
-			return ResponseEntity.badRequest().body(null);
-		}
-
-		return ResponseEntity.ok(intervalo);
-
-	}
-	
-	@RequestMapping(value = "/premiacoes2", method = RequestMethod.GET)
-	public ResponseEntity<IntervaloPremioDto> listarIntervalosDePremiacao2(){
-		List<PremioDto> premios = new ArrayList<PremioDto>();
-		premios = filmeService.getPremiosIntervalo();
 
 		IntervaloPremioDto intervalo = new IntervaloPremioDto();
 		intervalo = filmeService.getIntervaloPremioDto(premios);

@@ -24,39 +24,6 @@ public class FilmeServiceImpl implements FilmeService {
 
 	public List<PremioDto> getPremios() {
 		List<PremioDto> premios = new ArrayList<PremioDto>();
-		List<Object> premiosObject = filmeRepository.findProdutores();
-		premiosObject.stream().forEach(object -> {
-			Object[] o = (Object[]) object;
-
-			PremioDto premio = new PremioDto();
-			premio.setProducer((String) o[0]);
-			premio.setPreviousWin(Long.parseLong(o[1].toString()));
-			premio.setFollowingWin(Long.parseLong(o[2].toString()));
-			premio.setInterval(Long.parseLong(o[3].toString()));
-			premios.add(premio);
-		});
-
-		return premios;
-	}
-
-	public IntervaloPremioDto getIntervaloPremioDto(List<PremioDto> premios) {
-		IntervaloPremioDto intervalo = new IntervaloPremioDto();
-
-		intervalo.setMin(premios.stream()
-				.filter(premio -> premio.getInterval()
-						.equals(premios.stream().min(Comparator.comparing(PremioDto::getInterval)).get().getInterval()))
-				.collect(Collectors.toList()));
-
-		intervalo.setMax(premios.stream()
-				.filter(premio -> premio.getInterval()
-						.equals(premios.stream().max(Comparator.comparing(PremioDto::getInterval)).get().getInterval()))
-				.collect(Collectors.toList()));
-
-		return intervalo;
-	}
-
-	public List<PremioDto> getPremiosIntervalo() {
-		List<PremioDto> premios = new ArrayList<PremioDto>();
 
 		List<Filme> filmes = filmeRepository.findByGanhadorTrue();
 
@@ -87,5 +54,21 @@ public class FilmeServiceImpl implements FilmeService {
 		});
 		
 		return premios;
+	}
+
+	public IntervaloPremioDto getIntervaloPremioDto(List<PremioDto> premios) {
+		IntervaloPremioDto intervalo = new IntervaloPremioDto();
+
+		intervalo.setMin(premios.stream()
+				.filter(premio -> premio.getInterval()
+						.equals(premios.stream().min(Comparator.comparing(PremioDto::getInterval)).get().getInterval()))
+				.collect(Collectors.toList()));
+
+		intervalo.setMax(premios.stream()
+				.filter(premio -> premio.getInterval()
+						.equals(premios.stream().max(Comparator.comparing(PremioDto::getInterval)).get().getInterval()))
+				.collect(Collectors.toList()));
+
+		return intervalo;
 	}
 }
