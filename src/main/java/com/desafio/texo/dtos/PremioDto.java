@@ -9,8 +9,6 @@ public class PremioDto {
 
 	public PremioDto() {
 	}
-	
-	
 
 	public PremioDto(String producer, Long interval, Long previousWin, Long followingWin) {
 		super();
@@ -19,8 +17,6 @@ public class PremioDto {
 		this.previousWin = previousWin;
 		this.followingWin = followingWin;
 	}
-
-
 
 	public String getProducer() {
 		return producer;
@@ -59,8 +55,7 @@ public class PremioDto {
 		PremioDto premioCompare = (PremioDto) obj;
 
 		if (premioCompare != null) {
-			if (!premioCompare.getProducer().equals(this.producer) 
-					|| !premioCompare.getInterval().equals(this.interval)
+			if (!premioCompare.getProducer().equals(this.producer) || !premioCompare.getInterval().equals(this.interval)
 					|| !premioCompare.getFollowingWin().equals(this.followingWin)
 					|| !premioCompare.getPreviousWin().equals(this.previousWin)) {
 				return false;
